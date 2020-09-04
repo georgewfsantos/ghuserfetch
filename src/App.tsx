@@ -2,11 +2,12 @@ import React from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import Routes from "./routes";
-// import { Container } from './styles';
+import GlobaStyle from "./styles/global";
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
+      <GlobaStyle />
       <Routes />
     </BrowserRouter>
   );
