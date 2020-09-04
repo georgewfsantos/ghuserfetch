@@ -1,89 +1,61 @@
-import React from "react";
-import { FiInfo } from "react-icons/fi";
-import { Container, Title, Form, UserList } from "./styles";
+import React, { useCallback, useState, FormEvent } from "react";
+import { FiInfo, FiSearch } from "react-icons/fi";
+import { Link } from "react-router-dom";
+
+import api from "../../services/api";
+
+import { Container, Title, Form, UserInfo } from "./styles";
+
+interface User {
+  name: string;
+  avatar_url: string;
+}
 
 const Dashboard: React.FC = () => {
+  const [user, setUser] = useState<User | undefined>();
+  const [userName, setUserName] = useState("");
+
+  const fetchUserInfo = useCallback(
+    async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+      e.preventDefault();
+      try {
+        const response = await api.get(`/${userName}`);
+
+        console.log(response.data);
+
+        setUser(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [userName]
+  );
   return (
     <Container>
       <Title>Github Users</Title>
-      <Form>
-        <input placeholder="User name" />
-        <button>Search</button>
+      <Form onSubmit={fetchUserInfo}>
+        <input
+          placeholder="User name"
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
+        />
+        <button>
+          <FiSearch size={20} />
+        </button>
       </Form>
 
-      <UserList>
-        <a href="test">
-          <img
-            src="https://avatars1.githubusercontent.com/u/33661312?s=460&u=a140ec4f9f80ce1bcbcbf4229ad38c83da447040&v=4"
-            alt="me"
-          />
+      <UserInfo>
+        {user && (
+          <Link to="/user">
+            <img src={user?.avatar_url} alt={user?.avatar_url} />
 
-          <div>
-            <strong>Me myself Irene</strong>
-            <FiInfo size={20} />
-          </div>
-        </a>
-
-        <a href="test">
-          <img
-            src="https://avatars1.githubusercontent.com/u/33661312?s=460&u=a140ec4f9f80ce1bcbcbf4229ad38c83da447040&v=4"
-            alt="me"
-          />
-
-          <div>
-            <strong>Me myself Irene</strong>
-            <FiInfo size={20} />
-          </div>
-        </a>
-
-        <a href="test">
-          <img
-            src="https://avatars1.githubusercontent.com/u/33661312?s=460&u=a140ec4f9f80ce1bcbcbf4229ad38c83da447040&v=4"
-            alt="me"
-          />
-
-          <div>
-            <strong>Me myself Irene</strong>
-            <FiInfo size={20} />
-          </div>
-        </a>
-
-        <a href="test">
-          <img
-            src="https://avatars1.githubusercontent.com/u/33661312?s=460&u=a140ec4f9f80ce1bcbcbf4229ad38c83da447040&v=4"
-            alt="me"
-          />
-
-          <div>
-            <strong>Me myself Irene</strong>
-            <FiInfo size={20} />
-          </div>
-        </a>
-
-        <a href="test">
-          <img
-            src="https://avatars1.githubusercontent.com/u/33661312?s=460&u=a140ec4f9f80ce1bcbcbf4229ad38c83da447040&v=4"
-            alt="me"
-          />
-
-          <div>
-            <strong>Me myself Irene</strong>
-            <FiInfo size={20} />
-          </div>
-        </a>
-
-        <a href="test">
-          <img
-            src="https://avatars1.githubusercontent.com/u/33661312?s=460&u=a140ec4f9f80ce1bcbcbf4229ad38c83da447040&v=4"
-            alt="me"
-          />
-
-          <div>
-            <strong>Me myself Irene</strong>
-            <FiInfo size={20} />
-          </div>
-        </a>
-      </UserList>
+            <div>
+              <strong>{user?.name}</strong>
+              <FiInfo size={20} />
+            </div>
+          </Link>
+        )}
+      </UserInfo>
     </Container>
   );
 };

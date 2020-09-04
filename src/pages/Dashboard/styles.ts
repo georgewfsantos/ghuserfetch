@@ -33,7 +33,7 @@ export const Form = styled.form`
   }
 
   button {
-    width: 200px;
+    width: 100px;
     height: 50px;
     border: 0;
     border-radius: 4px;
@@ -49,7 +49,7 @@ export const Form = styled.form`
   }
 `;
 
-export const UserList = styled.div`
+export const UserInfo = styled.div`
   margin-top: 60px;
   width: 90%;
   max-width: 640px;
@@ -64,10 +64,6 @@ export const UserList = styled.div`
     padding: 20px;
     text-decoration: none;
 
-    & + a {
-      margin-top: 8px;
-    }
-
     &:hover {
       box-shadow: 0 8px 8px 0 #0000, 0 8px 8px 0 grey;
     }
@@ -79,7 +75,7 @@ export const UserList = styled.div`
     }
 
     > div {
-      margin-left: 15px;
+      margin-left: 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
