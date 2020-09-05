@@ -42,6 +42,7 @@ export const Form = styled.form`
     color: #fafdfe;
     transition: background-color 0.2s;
     font-weight: bold;
+    cursor: pointer;
 
     &:hover {
       background: ${shade(0.1, "#f95a59")};

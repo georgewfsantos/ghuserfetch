@@ -46,7 +46,12 @@ const Dashboard: React.FC = () => {
 
       <UserInfo>
         {user && (
-          <Link to="/user">
+          <Link
+            to={{
+              pathname: "/user",
+              state: user,
+            }}
+          >
             <img src={user?.avatar_url} alt={user?.avatar_url} />
 
             <div>
