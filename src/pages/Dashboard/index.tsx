@@ -11,9 +11,18 @@ interface User {
   avatar_url: string;
 }
 
+interface UserFollower {
+  id: number;
+  name: string;
+  login: string;
+  avatar_url: string;
+  email: string;
+}
+
 const Dashboard: React.FC = () => {
   const [user, setUser] = useState<User | undefined>();
   const [userName, setUserName] = useState("");
+  const [followers, setFollowers] = useState<UserFollower[]>([]);
 
   const fetchUserInfo = useCallback(
     async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -21,7 +30,20 @@ const Dashboard: React.FC = () => {
       try {
         const response = await api.get(`/${userName}`);
 
-        console.log(response.data);
+        const followersResponse = await api.get(`${userName}/followers`);
+
+        const firstFiveFollowers = followersResponse.data.slice(0, 5);
+
+        for (let follower of firstFiveFollowers) {
+          const followerResponse = await api.get(`/${follower.login}`);
+
+          follower.name = followerResponse.data.name;
+          follower.email = followerResponse.data.email;
+
+          console.log(follower);
+          console.log(firstFiveFollowers);
+          setFollowers(firstFiveFollowers);
+        }
 
         setUser(response.data);
       } catch (error) {
@@ -49,7 +71,10 @@ const Dashboard: React.FC = () => {
           <Link
             to={{
               pathname: "/user",
-              state: user,
+              state: {
+                user,
+                followers,
+              },
             }}
           >
             <img src={user?.avatar_url} alt={user?.avatar_url} />
