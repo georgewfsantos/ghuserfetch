@@ -1,8 +1,6 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
-
-import api from "../../services/api";
-
+import { Repository, Organization } from "../Dashboard/index";
 import { Container, UserInfoContainer } from "./styles";
 
 interface UserFollower {
@@ -25,6 +23,9 @@ interface LocationState {
   };
 
   followers: UserFollower[];
+  gists: number;
+  orgs: Array<Organization>;
+  repos: Array<Repository>;
 }
 
 const User: React.FC = () => {
@@ -34,22 +35,24 @@ const User: React.FC = () => {
 
   const followers = state.followers;
 
-  console.log(state);
-  console.log(followers);
-
-  // console.log(userFollowers);
-
   return (
     <Container>
       <UserInfoContainer>
         <img src={state.user.avatar_url} alt={state.user.name} />
 
-        <div>
+        <div user-info>
           <strong>{state.user.name}</strong>
           <span>({state.user.login})</span>
+          <strong>
+            Following: <span className="following">{state.user.following}</span>
+          </strong>
+          <strong>
+            {" "}
+            Gists: <span className="gists">{state.gists}</span>
+          </strong>
         </div>
 
-        <h3>Followers</h3>
+        <h4>Followers:</h4>
         <div className="follower-list">
           {followers.map((follower) => (
             <div className="follower-item" key={follower.id}>
@@ -69,6 +72,34 @@ const User: React.FC = () => {
             </div>
           ))}
         </div>
+
+        <h4>Repos:</h4>
+
+        {state.repos.length > 0 ? (
+          <div className="repo-list">
+            {state.repos.map((repo) => (
+              <div className="repo-item" key={repo.id}>
+                <strong>{repo.full_name}</strong>
+              </div>
+            ))}
+          </div>
+        ) : (
+          0
+        )}
+
+        <h4>Organizations:</h4>
+
+        {state.orgs.length > 0 ? (
+          <div className="org-list">
+            {state.orgs.map((org) => (
+              <div className="org-item" key={org.id}>
+                <strong>{org.login}</strong>
+              </div>
+            ))}
+          </div>
+        ) : (
+          0
+        )}
       </UserInfoContainer>
     </Container>
   );

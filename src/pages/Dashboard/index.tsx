@@ -11,6 +11,21 @@ interface User {
   avatar_url: string;
 }
 
+export interface Organization {
+  id: number;
+  login: string;
+  description: string;
+}
+
+export interface Repository {
+  id: number;
+  full_name: string;
+}
+
+interface Gist {
+  id: number;
+}
+
 interface UserFollower {
   id: number;
   name: string;
@@ -23,12 +38,18 @@ const Dashboard: React.FC = () => {
   const [user, setUser] = useState<User | undefined>();
   const [userName, setUserName] = useState("");
   const [followers, setFollowers] = useState<UserFollower[]>([]);
+  const [gists, setGists] = useState<Gist[]>([]);
+  const [orgs, setOrgs] = useState<Organization[]>([]);
+  const [repos, setRepos] = useState<Repository[]>([]);
 
   const fetchUserInfo = useCallback(
     async (e: FormEvent<HTMLFormElement>): Promise<void> => {
       e.preventDefault();
       try {
         const response = await api.get(`/${userName}`);
+        const gistsResponse = await api.get(`${userName}/gists`);
+        const orgsResponse = await api.get(`${userName}/orgs`);
+        const reposResponse = await api.get(`${userName}/repos`);
 
         const followersResponse = await api.get(`${userName}/followers`);
 
@@ -39,13 +60,17 @@ const Dashboard: React.FC = () => {
 
           follower.name = followerResponse.data.name;
           follower.email = followerResponse.data.email;
+          follower.gists = gistsResponse.data;
+          follower.orgs = orgsResponse.data;
+          follower.repos = reposResponse.data;
 
-          console.log(follower);
-          console.log(firstFiveFollowers);
           setFollowers(firstFiveFollowers);
         }
 
         setUser(response.data);
+        setGists(gistsResponse.data);
+        setOrgs(orgsResponse.data);
+        setRepos(reposResponse.data);
       } catch (error) {
         console.log(error);
       }
@@ -74,6 +99,9 @@ const Dashboard: React.FC = () => {
               state: {
                 user,
                 followers,
+                gists: gists.length,
+                orgs,
+                repos,
               },
             }}
           >

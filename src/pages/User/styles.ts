@@ -31,15 +31,26 @@ export const UserInfoContainer = styled.div`
     flex-direction: column;
     align-items: center;
     margin-top: 5px;
+
+    .following,
+    .gists {
+      color: #f95a59;
+      display: inline-block;
+    }
+
+    .gists {
+      margin-bottom: 5px;
+    }
   }
 
-  h3 {
+  h4 {
     margin-top: 15px;
   }
 
   .follower-list {
     display: flex;
     flex-direction: column;
+    margin-top: 15px;
 
     width: 100%;
 
@@ -78,6 +89,79 @@ export const UserInfoContainer = styled.div`
             color: #fff;
           }
         }
+      }
+    }
+  }
+
+  .repo-list {
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+
+    width: 100%;
+
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .repo-item {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 8px;
+      background: #fff;
+      margin-bottom: 5px;
+      background: #f95a59;
+      border-radius: 4px;
+
+      &:first-of-type {
+        margin-top: 10px;
+      }
+
+      &:last-of-type {
+        margin-bottom: 10px;
+      }
+
+      strong {
+        color: #232249;
+      }
+    }
+  }
+
+  .org-list {
+    display: flex;
+    flex-direction: column;
+    max-height: 200px;
+    width: 100%;
+
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .org-item {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 8px;
+      background: #fff;
+      margin-bottom: 5px;
+      background: #f95a59;
+      border-radius: 4px;
+
+      &:first-of-type {
+        margin-top: 10px;
+      }
+
+      &:last-of-type {
+        margin-bottom: 10px;
+      }
+
+      strong {
+        color: #232249;
       }
     }
   }
