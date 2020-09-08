@@ -1,6 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 To get the project running, all you need to do, after cloning the repository  is the following:
+
 Para rodar o projeto, execute os seguintes comandos:
 
 
