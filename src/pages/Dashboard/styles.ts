@@ -88,4 +88,16 @@ export const UserInfo = styled.div`
       }
     }
   }
+
+  .error,
+  .loading {
+    display: flex;
+    align-items: center;
+
+    background: #fafdfe;
+    border-radius: 4px;
+    width: 100%;
+    padding: 20px;
+    text-decoration: none;
+  }
 `;

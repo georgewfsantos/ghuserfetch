@@ -1,7 +1,8 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { Repository, Organization } from "../Dashboard/index";
 import { Container, UserInfoContainer } from "./styles";
+import { FiGithub, FiUsers, FiArrowLeftCircle } from "react-icons/fi";
 
 interface UserFollower {
   id: number;
@@ -39,6 +40,10 @@ const User: React.FC = () => {
     <Container>
       <UserInfoContainer>
         <img src={state.user.avatar_url} alt={state.user.name} />
+
+        <Link to="/">
+          <FiArrowLeftCircle size={18} color="#232249" />
+        </Link>
 
         <div user-info>
           <strong>{state.user.name}</strong>
@@ -80,11 +85,12 @@ const User: React.FC = () => {
             {state.repos.map((repo) => (
               <div className="repo-item" key={repo.id}>
                 <strong>{repo.full_name}</strong>
+                <FiGithub size={18} color="#232249" />
               </div>
             ))}
           </div>
         ) : (
-          0
+          <span className="no-elements">0</span>
         )}
 
         <h4>Organizations:</h4>
@@ -94,11 +100,12 @@ const User: React.FC = () => {
             {state.orgs.map((org) => (
               <div className="org-item" key={org.id}>
                 <strong>{org.login}</strong>
+                <FiUsers size={18} color="#232249" />
               </div>
             ))}
           </div>
         ) : (
-          0
+          <span className="no-elements">0</span>
         )}
       </UserInfoContainer>
     </Container>

@@ -26,6 +26,10 @@ export const UserInfoContainer = styled.div`
     border-radius: 50px;
   }
 
+  a::hover {
+    color: #f95a59;
+  }
+
   > div {
     display: flex;
     flex-direction: column;
@@ -109,6 +113,7 @@ export const UserInfoContainer = styled.div`
     .repo-item {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       width: 100%;
       padding: 8px;
       background: #fff;
@@ -137,6 +142,8 @@ export const UserInfoContainer = styled.div`
     width: 100%;
 
     overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 
     &::-webkit-scrollbar {
       display: none;
@@ -145,6 +152,7 @@ export const UserInfoContainer = styled.div`
     .org-item {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       width: 100%;
       padding: 8px;
       background: #fff;
@@ -164,5 +172,9 @@ export const UserInfoContainer = styled.div`
         color: #232249;
       }
     }
+  }
+
+  .no-elements {
+    color: #f95a59;
   }
 `;

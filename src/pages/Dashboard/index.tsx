@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import api from "../../services/api";
 
 import { Container, Title, Form, UserInfo } from "./styles";
+import { toast } from "react-toastify";
 
 interface User {
   name: string;
@@ -42,6 +43,8 @@ const Dashboard: React.FC = () => {
   const [orgs, setOrgs] = useState<Organization[]>([]);
   const [repos, setRepos] = useState<Repository[]>([]);
 
+  const [loading, setLoading] = useState(false);
+
   const fetchUserInfo = useCallback(
     async (e: FormEvent<HTMLFormElement>): Promise<void> => {
       e.preventDefault();
@@ -71,8 +74,13 @@ const Dashboard: React.FC = () => {
         setGists(gistsResponse.data);
         setOrgs(orgsResponse.data);
         setRepos(reposResponse.data);
+
+        setLoading(false);
       } catch (error) {
-        console.log(error);
+        toast.error(
+          "User could not be found. Please check the user name and try again."
+        );
+        setLoading(false);
       }
     },
     [userName]
@@ -86,7 +94,7 @@ const Dashboard: React.FC = () => {
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
         />
-        <button>
+        <button onClick={() => setLoading(true)}>
           <FiSearch size={20} />
         </button>
       </Form>
@@ -112,6 +120,10 @@ const Dashboard: React.FC = () => {
               <FiInfo size={20} />
             </div>
           </Link>
+        )}
+
+        {loading && (
+          <div className="loading">Searching user information...</div>
         )}
       </UserInfo>
     </Container>
